@@ -1,0 +1,4 @@
+fragment Filter($session: Session) on Token {
+  *
+  [where shopId == $session.shopId]
+}
