@@ -2,6 +2,7 @@ import { useFindFirst, useQuery } from "@gadgetinc/react";
 import { AlphaCard, Banner, FooterHelp, HorizontalStack, Icon, Layout, Link, Page, Spinner, Text, VerticalStack } from "@shopify/polaris";
 import { StoreMajor } from "@shopify/polaris-icons";
 import { api } from "./api";
+import { useCreateToken } from "./createToken"; 
 import React, { useEffect, useState } from 'react';
 
 const gadgetMetaQuery = `
@@ -18,25 +19,13 @@ const ShopPage = () => {
   const [{ data: metaData, fetching: fetchingGadgetMeta }] = useQuery({
     query: gadgetMetaQuery,
   });
+ 
+  const { data: tokenData, fetching: tokenFetching, error: tokenError } = useCreateToken("79850963242");
 
-
-  const [record, setRecord] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchRecord = async () => {
-  //     try {
-  //       const recordResponse = await api.currentSession.get();
-  //       setRecord(recordResponse);
-  //     } catch (err) {
-  //       console.error('Failed to fetch record:', err);
-  //     }
-  //   };
-
-  //   fetchRecord();
-  // }, []);  // The empty dependency array means this useEffect runs once when the component mounts.
-
-
-
+  console.log(tokenData)
+  console.log(tokenFetching)
+  console.log(tokenError)
+  
   if (error) {
     return (
       <Page title="Error">
@@ -100,8 +89,8 @@ const ShopPage = () => {
               {/* Button with the external link containing the session token */}
               {data && (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                  {/* <Link url={`https://1aaf-103-252-200-189.ngrok-free.app?session=${record.shopifySID}`} external> */}
-                  <Link url={`https://0108-103-252-200-189.ngrok-free.app?session=${data.name}`} external>
+                  {/* <Link url={`https://0108-103-252-200-189.ngrok-free.app?token=${tokenData.token}`} external>  Assuming tokenData.token holds the token */}
+                  <Link url={`https://0108-103-252-200-189.ngrok-free.app?token=srdfswdfwef`} external>  {/* Assuming tokenData.token holds the token */}
 
                     <button style={{ padding: '10px 15px', cursor: 'pointer' }}>Start Here</button>
                   </Link>

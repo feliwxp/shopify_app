@@ -8,7 +8,7 @@
 *  |_|  \___|_|_| \_/\_/  /_/\_\ .__/
 *                              |_|
 *
-* Built for environment `"Development"` at version "45"
+* Built for environment `"Development"` at version "130"
 * Edit this app here: https://"feliwxp".gadget.dev/edit
 */
 import { FastifyLoggerInstance } from "fastify";
@@ -25,6 +25,7 @@ export * from "./models/ShopifyProduct";
 export * from "./models/ShopifyShop";
 export * from "./models/ShopifySync";
 export * from "./models/Token";
+export * from "./models/Test";
 export * from "./effects";
 /**
  * An instance of the Gadget logger

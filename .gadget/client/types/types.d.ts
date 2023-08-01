@@ -23,6 +23,8 @@ export type InternalShopifyShopRecord = Scalars["JSONObject"];
 export type InternalShopifySyncRecord = Scalars["JSONObject"];
 /** Represents one token result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalTokenRecord = Scalars["JSONObject"];
+/** Represents one test result record in internal api calls. Returns a JSON blob of all the record's fields. */
+export type InternalTestRecord = Scalars["JSONObject"];
 export interface ShopifySyncSort {
     /** Sort the results by the id field. Defaults to ascending (smallest value first). */
     id?: SortOrder | null;
@@ -423,6 +425,25 @@ export interface FloatFilter {
     greaterThan?: (Scalars['Float'] | null) | null;
     greaterThanOrEqual?: (Scalars['Float'] | null) | null;
 }
+export interface TestSort {
+    /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+    id?: SortOrder | null;
+    /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+    createdAt?: SortOrder | null;
+    /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+    updatedAt?: SortOrder | null;
+    /** Sort the results by the token field. Defaults to ascending (smallest value first). */
+    token?: SortOrder | null;
+}
+export interface TestFilter {
+    AND?: (TestFilter | null)[];
+    OR?: (TestFilter | null)[];
+    NOT?: (TestFilter | null)[];
+    id?: IDFilter | null;
+    createdAt?: DateTimeFilter | null;
+    updatedAt?: DateTimeFilter | null;
+    token?: StringFilter | null;
+}
 export interface RunShopifySyncInput {
     domain?: (Scalars['String'] | null) | null;
     syncSince?: Date | Scalars['ISO8601DateString'] | null;
@@ -462,6 +483,12 @@ export interface UpdateTokenInput {
     token?: (Scalars['String'] | null) | null;
     shopId?: ShopifyShopBelongsToInput | null;
 }
+export interface CreateTestInput {
+    token?: (Scalars['String'] | null) | null;
+}
+export interface UpdateTestInput {
+    token?: (Scalars['String'] | null) | null;
+}
 export interface InternalSessionInput {
     state?: (Scalars['RecordState'] | null) | null;
     stateHistory?: (Scalars['RecordState'] | null) | null;
@@ -487,15 +514,9 @@ export interface InternalShopifyGdprRequestInput {
     topic?: ShopifyGdprRequestTopicEnum | null;
     shop?: InternalBelongsToInput | null;
 }
-export interface CreateShopifyGdprRequestInput {
-    payload?: (Scalars['JSON'] | null) | null;
-    topic?: ShopifyGdprRequestTopicEnum | null;
-    shop?: ShopifyShopBelongsToInput | null;
-}
-export interface UpdateShopifyGdprRequestInput {
-    payload?: (Scalars['JSON'] | null) | null;
-    topic?: ShopifyGdprRequestTopicEnum | null;
-    shop?: ShopifyShopBelongsToInput | null;
+export interface AppGraphQLTriggerMutationContext {
+    /** The ID of the session that triggered this mutation. Will be the session that's loaded in the mutation context. */
+    sessionID?: (Scalars['GadgetID'] | null) | null;
 }
 export interface InternalShopifyProductInput {
     state?: (Scalars['RecordState'] | null) | null;
@@ -517,40 +538,6 @@ export interface InternalShopifyProductInput {
     shopifyUpdatedAt?: Date | Scalars['ISO8601DateString'] | null;
     vendor?: (Scalars['String'] | null) | null;
     shop?: InternalBelongsToInput | null;
-}
-export interface CreateShopifyProductInput {
-    id?: (Scalars['GadgetID'] | null) | null;
-    productCategory?: (Scalars['JSON'] | null) | null;
-    body?: (Scalars['String'] | null) | null;
-    shopifyCreatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    handle?: (Scalars['String'] | null) | null;
-    productType?: (Scalars['String'] | null) | null;
-    publishedAt?: Date | Scalars['ISO8601DateString'] | null;
-    publishedScope?: (Scalars['String'] | null) | null;
-    status?: ShopifyProductStatusEnum | null;
-    tags?: (Scalars['JSON'] | null) | null;
-    templateSuffix?: (Scalars['String'] | null) | null;
-    title?: (Scalars['String'] | null) | null;
-    shopifyUpdatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    vendor?: (Scalars['String'] | null) | null;
-    shop?: ShopifyShopBelongsToInput | null;
-}
-export interface UpdateShopifyProductInput {
-    id?: (Scalars['GadgetID'] | null) | null;
-    productCategory?: (Scalars['JSON'] | null) | null;
-    body?: (Scalars['String'] | null) | null;
-    shopifyCreatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    handle?: (Scalars['String'] | null) | null;
-    productType?: (Scalars['String'] | null) | null;
-    publishedAt?: Date | Scalars['ISO8601DateString'] | null;
-    publishedScope?: (Scalars['String'] | null) | null;
-    status?: ShopifyProductStatusEnum | null;
-    tags?: (Scalars['JSON'] | null) | null;
-    templateSuffix?: (Scalars['String'] | null) | null;
-    title?: (Scalars['String'] | null) | null;
-    shopifyUpdatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    vendor?: (Scalars['String'] | null) | null;
-    shop?: ShopifyShopBelongsToInput | null;
 }
 export interface InternalShopifyShopInput {
     state?: (Scalars['RecordState'] | null) | null;
@@ -631,333 +618,6 @@ export interface NumericAtomicFieldUpdateInput {
     /** A number to atomically decrement the field value by. Can only be used on numeric fields. */
     decrement?: (Scalars['Float'] | null) | null;
 }
-export interface UpdateShopifyShopInput {
-    id?: (Scalars['GadgetID'] | null) | null;
-    syncs?: (ShopifySyncHasManyInput | null)[];
-    address1?: (Scalars['String'] | null) | null;
-    address2?: (Scalars['String'] | null) | null;
-    checkoutApiSupported?: (Scalars['Boolean'] | null) | null;
-    city?: (Scalars['String'] | null) | null;
-    cookieConsentLevel?: (Scalars['String'] | null) | null;
-    country?: (Scalars['String'] | null) | null;
-    countryCode?: (Scalars['String'] | null) | null;
-    countryName?: (Scalars['String'] | null) | null;
-    countyTaxes?: (Scalars['JSON'] | null) | null;
-    shopifyCreatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    currency?: (Scalars['String'] | null) | null;
-    customerEmail?: (Scalars['String'] | null) | null;
-    domain?: (Scalars['String'] | null) | null;
-    eligibleForCardReaderGiveaway?: (Scalars['Boolean'] | null) | null;
-    eligibleForPayments?: (Scalars['Boolean'] | null) | null;
-    email?: (Scalars['String'] | null) | null;
-    enabledPresentmentCurrencies?: (Scalars['JSON'] | null) | null;
-    finances?: (Scalars['Boolean'] | null) | null;
-    forceSsl?: (Scalars['Boolean'] | null) | null;
-    googleAppsDomain?: (Scalars['String'] | null) | null;
-    googleAppsLoginEnabled?: (Scalars['Boolean'] | null) | null;
-    hasDiscounts?: (Scalars['Boolean'] | null) | null;
-    hasGiftCards?: (Scalars['Boolean'] | null) | null;
-    hasStorefront?: (Scalars['Boolean'] | null) | null;
-    ianaTimezone?: (Scalars['String'] | null) | null;
-    latitude?: (Scalars['Float'] | null) | null;
-    longitude?: (Scalars['Float'] | null) | null;
-    marketingSmsContentEnabledAtCheckout?: (Scalars['Boolean'] | null) | null;
-    moneyFormat?: (Scalars['String'] | null) | null;
-    moneyInEmailsFormat?: (Scalars['String'] | null) | null;
-    moneyWithCurrencyFormat?: (Scalars['String'] | null) | null;
-    moneyWithCurrencyInEmailsFormat?: (Scalars['String'] | null) | null;
-    multiLocationEnabled?: (Scalars['Boolean'] | null) | null;
-    myshopifyDomain?: (Scalars['String'] | null) | null;
-    name?: (Scalars['String'] | null) | null;
-    passwordEnabled?: (Scalars['Boolean'] | null) | null;
-    phone?: (Scalars['String'] | null) | null;
-    planDisplayName?: (Scalars['String'] | null) | null;
-    planName?: (Scalars['String'] | null) | null;
-    preLaunchEnabled?: (Scalars['Boolean'] | null) | null;
-    primaryLocale?: (Scalars['String'] | null) | null;
-    province?: (Scalars['String'] | null) | null;
-    provinceCode?: (Scalars['String'] | null) | null;
-    requiresExtraPaymentsAgreement?: (Scalars['Boolean'] | null) | null;
-    setupRequired?: (Scalars['Boolean'] | null) | null;
-    shopOwner?: (Scalars['String'] | null) | null;
-    source?: (Scalars['String'] | null) | null;
-    taxShipping?: (Scalars['Boolean'] | null) | null;
-    taxesIncluded?: (Scalars['Boolean'] | null) | null;
-    timezone?: (Scalars['String'] | null) | null;
-    transactionalSmsDisabled?: (Scalars['Boolean'] | null) | null;
-    shopifyUpdatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    weightUnit?: (Scalars['String'] | null) | null;
-    zipCode?: (Scalars['String'] | null) | null;
-    tokens?: (TokenHasManyInput | null)[];
-}
-export interface ShopifySyncHasManyInput {
-    run?: NestedShopifySyncRunInput | null;
-    complete?: NestedShopifySyncCompleteInput | null;
-    error?: NestedShopifySyncErrorInput | null;
-    /** Creates, updates, or deletes existing records in the database as needed to arrive at the list of records specified. */
-    _converge?: ConvergeShopifySyncInput | null;
-}
-export interface NestedShopifySyncRunInput {
-    domain?: (Scalars['String'] | null) | null;
-    syncSince?: Date | Scalars['ISO8601DateString'] | null;
-    errorMessage?: (Scalars['String'] | null) | null;
-    errorDetails?: (Scalars['String'] | null) | null;
-    force?: (Scalars['Boolean'] | null) | null;
-    models?: (Scalars['JSON'] | null) | null;
-    shop?: ShopifyShopBelongsToInput | null;
-    startReason?: (Scalars['String'] | null) | null;
-}
-export interface NestedShopifySyncCompleteInput {
-    domain?: (Scalars['String'] | null) | null;
-    syncSince?: Date | Scalars['ISO8601DateString'] | null;
-    errorMessage?: (Scalars['String'] | null) | null;
-    errorDetails?: (Scalars['String'] | null) | null;
-    force?: (Scalars['Boolean'] | null) | null;
-    models?: (Scalars['JSON'] | null) | null;
-    shop?: ShopifyShopBelongsToInput | null;
-    id: (Scalars['GadgetID'] | null);
-}
-export interface NestedShopifySyncErrorInput {
-    domain?: (Scalars['String'] | null) | null;
-    syncSince?: Date | Scalars['ISO8601DateString'] | null;
-    errorMessage?: (Scalars['String'] | null) | null;
-    errorDetails?: (Scalars['String'] | null) | null;
-    force?: (Scalars['Boolean'] | null) | null;
-    models?: (Scalars['JSON'] | null) | null;
-    shop?: ShopifyShopBelongsToInput | null;
-    id: (Scalars['GadgetID'] | null);
-}
-export interface ConvergeShopifySyncInput {
-    /** The new list of records to converge to */
-    values: (ConvergeShopifySyncValues | null)[];
-    /** An optional partial set of action api identifiers to use when creating, updating, and deleting records to converge to the new list. */
-    actions?: ConvergeActionMap | null;
-}
-export interface ConvergeShopifySyncValues {
-    id?: (Scalars['GadgetID'] | null) | null;
-    domain?: (Scalars['String'] | null) | null;
-    syncSince?: Date | Scalars['ISO8601DateString'] | null;
-    errorMessage?: (Scalars['String'] | null) | null;
-    errorDetails?: (Scalars['String'] | null) | null;
-    force?: (Scalars['Boolean'] | null) | null;
-    models?: (Scalars['JSON'] | null) | null;
-    shop?: ShopifyShopBelongsToInput | null;
-}
-export interface ConvergeActionMap {
-    /** One of the model action's API identifiers. Specifies which action to use to create new records that are in the set of specified records but not yet in the database. Defaults to the action named `create` if it exists. */
-    create?: (Scalars['String'] | null) | null;
-    /** One of the model action's API identifiers. Specifies which action to use to update new records that are in the set of specified records and already in the database, but maybe have different field values. Defaults to the action named `update` if it exists. */
-    update?: (Scalars['String'] | null) | null;
-    /** One of the model action's API identifiers. Specifies which action to use to delete records that are not in the set of specified records but exist in the database. Defaults to the action named `delete` if it exists. */
-    delete?: (Scalars['String'] | null) | null;
-}
-export interface TokenHasManyInput {
-    create?: NestedTokenCreateInput | null;
-    update?: NestedTokenUpdateInput | null;
-    delete?: NestedTokenDeleteInput | null;
-    /** Creates, updates, or deletes existing records in the database as needed to arrive at the list of records specified. */
-    _converge?: ConvergeTokenInput | null;
-}
-export interface NestedTokenCreateInput {
-    token?: (Scalars['String'] | null) | null;
-    shopId?: ShopifyShopBelongsToInput | null;
-}
-export interface NestedTokenUpdateInput {
-    token?: (Scalars['String'] | null) | null;
-    shopId?: ShopifyShopBelongsToInput | null;
-    id: (Scalars['GadgetID'] | null);
-}
-export interface NestedTokenDeleteInput {
-    id: (Scalars['GadgetID'] | null);
-}
-export interface ConvergeTokenInput {
-    /** The new list of records to converge to */
-    values: (ConvergeTokenValues | null)[];
-    /** An optional partial set of action api identifiers to use when creating, updating, and deleting records to converge to the new list. */
-    actions?: ConvergeActionMap | null;
-}
-export interface ConvergeTokenValues {
-    id?: (Scalars['GadgetID'] | null) | null;
-    token?: (Scalars['String'] | null) | null;
-    shopId?: ShopifyShopBelongsToInput | null;
-}
-export interface InstallShopifyShopInput {
-    id?: (Scalars['GadgetID'] | null) | null;
-    syncs?: (ShopifySyncHasManyInput | null)[];
-    address1?: (Scalars['String'] | null) | null;
-    address2?: (Scalars['String'] | null) | null;
-    checkoutApiSupported?: (Scalars['Boolean'] | null) | null;
-    city?: (Scalars['String'] | null) | null;
-    cookieConsentLevel?: (Scalars['String'] | null) | null;
-    country?: (Scalars['String'] | null) | null;
-    countryCode?: (Scalars['String'] | null) | null;
-    countryName?: (Scalars['String'] | null) | null;
-    countyTaxes?: (Scalars['JSON'] | null) | null;
-    shopifyCreatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    currency?: (Scalars['String'] | null) | null;
-    customerEmail?: (Scalars['String'] | null) | null;
-    domain?: (Scalars['String'] | null) | null;
-    eligibleForCardReaderGiveaway?: (Scalars['Boolean'] | null) | null;
-    eligibleForPayments?: (Scalars['Boolean'] | null) | null;
-    email?: (Scalars['String'] | null) | null;
-    enabledPresentmentCurrencies?: (Scalars['JSON'] | null) | null;
-    finances?: (Scalars['Boolean'] | null) | null;
-    forceSsl?: (Scalars['Boolean'] | null) | null;
-    googleAppsDomain?: (Scalars['String'] | null) | null;
-    googleAppsLoginEnabled?: (Scalars['Boolean'] | null) | null;
-    hasDiscounts?: (Scalars['Boolean'] | null) | null;
-    hasGiftCards?: (Scalars['Boolean'] | null) | null;
-    hasStorefront?: (Scalars['Boolean'] | null) | null;
-    ianaTimezone?: (Scalars['String'] | null) | null;
-    latitude?: (Scalars['Float'] | null) | null;
-    longitude?: (Scalars['Float'] | null) | null;
-    marketingSmsContentEnabledAtCheckout?: (Scalars['Boolean'] | null) | null;
-    moneyFormat?: (Scalars['String'] | null) | null;
-    moneyInEmailsFormat?: (Scalars['String'] | null) | null;
-    moneyWithCurrencyFormat?: (Scalars['String'] | null) | null;
-    moneyWithCurrencyInEmailsFormat?: (Scalars['String'] | null) | null;
-    multiLocationEnabled?: (Scalars['Boolean'] | null) | null;
-    myshopifyDomain?: (Scalars['String'] | null) | null;
-    name?: (Scalars['String'] | null) | null;
-    passwordEnabled?: (Scalars['Boolean'] | null) | null;
-    phone?: (Scalars['String'] | null) | null;
-    planDisplayName?: (Scalars['String'] | null) | null;
-    planName?: (Scalars['String'] | null) | null;
-    preLaunchEnabled?: (Scalars['Boolean'] | null) | null;
-    primaryLocale?: (Scalars['String'] | null) | null;
-    province?: (Scalars['String'] | null) | null;
-    provinceCode?: (Scalars['String'] | null) | null;
-    requiresExtraPaymentsAgreement?: (Scalars['Boolean'] | null) | null;
-    setupRequired?: (Scalars['Boolean'] | null) | null;
-    shopOwner?: (Scalars['String'] | null) | null;
-    source?: (Scalars['String'] | null) | null;
-    taxShipping?: (Scalars['Boolean'] | null) | null;
-    taxesIncluded?: (Scalars['Boolean'] | null) | null;
-    timezone?: (Scalars['String'] | null) | null;
-    transactionalSmsDisabled?: (Scalars['Boolean'] | null) | null;
-    shopifyUpdatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    weightUnit?: (Scalars['String'] | null) | null;
-    zipCode?: (Scalars['String'] | null) | null;
-    tokens?: (TokenHasManyInput | null)[];
-}
-export interface UninstallShopifyShopInput {
-    id?: (Scalars['GadgetID'] | null) | null;
-    syncs?: (ShopifySyncHasManyInput | null)[];
-    address1?: (Scalars['String'] | null) | null;
-    address2?: (Scalars['String'] | null) | null;
-    checkoutApiSupported?: (Scalars['Boolean'] | null) | null;
-    city?: (Scalars['String'] | null) | null;
-    cookieConsentLevel?: (Scalars['String'] | null) | null;
-    country?: (Scalars['String'] | null) | null;
-    countryCode?: (Scalars['String'] | null) | null;
-    countryName?: (Scalars['String'] | null) | null;
-    countyTaxes?: (Scalars['JSON'] | null) | null;
-    shopifyCreatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    currency?: (Scalars['String'] | null) | null;
-    customerEmail?: (Scalars['String'] | null) | null;
-    domain?: (Scalars['String'] | null) | null;
-    eligibleForCardReaderGiveaway?: (Scalars['Boolean'] | null) | null;
-    eligibleForPayments?: (Scalars['Boolean'] | null) | null;
-    email?: (Scalars['String'] | null) | null;
-    enabledPresentmentCurrencies?: (Scalars['JSON'] | null) | null;
-    finances?: (Scalars['Boolean'] | null) | null;
-    forceSsl?: (Scalars['Boolean'] | null) | null;
-    googleAppsDomain?: (Scalars['String'] | null) | null;
-    googleAppsLoginEnabled?: (Scalars['Boolean'] | null) | null;
-    hasDiscounts?: (Scalars['Boolean'] | null) | null;
-    hasGiftCards?: (Scalars['Boolean'] | null) | null;
-    hasStorefront?: (Scalars['Boolean'] | null) | null;
-    ianaTimezone?: (Scalars['String'] | null) | null;
-    latitude?: (Scalars['Float'] | null) | null;
-    longitude?: (Scalars['Float'] | null) | null;
-    marketingSmsContentEnabledAtCheckout?: (Scalars['Boolean'] | null) | null;
-    moneyFormat?: (Scalars['String'] | null) | null;
-    moneyInEmailsFormat?: (Scalars['String'] | null) | null;
-    moneyWithCurrencyFormat?: (Scalars['String'] | null) | null;
-    moneyWithCurrencyInEmailsFormat?: (Scalars['String'] | null) | null;
-    multiLocationEnabled?: (Scalars['Boolean'] | null) | null;
-    myshopifyDomain?: (Scalars['String'] | null) | null;
-    name?: (Scalars['String'] | null) | null;
-    passwordEnabled?: (Scalars['Boolean'] | null) | null;
-    phone?: (Scalars['String'] | null) | null;
-    planDisplayName?: (Scalars['String'] | null) | null;
-    planName?: (Scalars['String'] | null) | null;
-    preLaunchEnabled?: (Scalars['Boolean'] | null) | null;
-    primaryLocale?: (Scalars['String'] | null) | null;
-    province?: (Scalars['String'] | null) | null;
-    provinceCode?: (Scalars['String'] | null) | null;
-    requiresExtraPaymentsAgreement?: (Scalars['Boolean'] | null) | null;
-    setupRequired?: (Scalars['Boolean'] | null) | null;
-    shopOwner?: (Scalars['String'] | null) | null;
-    source?: (Scalars['String'] | null) | null;
-    taxShipping?: (Scalars['Boolean'] | null) | null;
-    taxesIncluded?: (Scalars['Boolean'] | null) | null;
-    timezone?: (Scalars['String'] | null) | null;
-    transactionalSmsDisabled?: (Scalars['Boolean'] | null) | null;
-    shopifyUpdatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    weightUnit?: (Scalars['String'] | null) | null;
-    zipCode?: (Scalars['String'] | null) | null;
-    tokens?: (TokenHasManyInput | null)[];
-}
-export interface ReinstallShopifyShopInput {
-    id?: (Scalars['GadgetID'] | null) | null;
-    syncs?: (ShopifySyncHasManyInput | null)[];
-    address1?: (Scalars['String'] | null) | null;
-    address2?: (Scalars['String'] | null) | null;
-    checkoutApiSupported?: (Scalars['Boolean'] | null) | null;
-    city?: (Scalars['String'] | null) | null;
-    cookieConsentLevel?: (Scalars['String'] | null) | null;
-    country?: (Scalars['String'] | null) | null;
-    countryCode?: (Scalars['String'] | null) | null;
-    countryName?: (Scalars['String'] | null) | null;
-    countyTaxes?: (Scalars['JSON'] | null) | null;
-    shopifyCreatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    currency?: (Scalars['String'] | null) | null;
-    customerEmail?: (Scalars['String'] | null) | null;
-    domain?: (Scalars['String'] | null) | null;
-    eligibleForCardReaderGiveaway?: (Scalars['Boolean'] | null) | null;
-    eligibleForPayments?: (Scalars['Boolean'] | null) | null;
-    email?: (Scalars['String'] | null) | null;
-    enabledPresentmentCurrencies?: (Scalars['JSON'] | null) | null;
-    finances?: (Scalars['Boolean'] | null) | null;
-    forceSsl?: (Scalars['Boolean'] | null) | null;
-    googleAppsDomain?: (Scalars['String'] | null) | null;
-    googleAppsLoginEnabled?: (Scalars['Boolean'] | null) | null;
-    hasDiscounts?: (Scalars['Boolean'] | null) | null;
-    hasGiftCards?: (Scalars['Boolean'] | null) | null;
-    hasStorefront?: (Scalars['Boolean'] | null) | null;
-    ianaTimezone?: (Scalars['String'] | null) | null;
-    latitude?: (Scalars['Float'] | null) | null;
-    longitude?: (Scalars['Float'] | null) | null;
-    marketingSmsContentEnabledAtCheckout?: (Scalars['Boolean'] | null) | null;
-    moneyFormat?: (Scalars['String'] | null) | null;
-    moneyInEmailsFormat?: (Scalars['String'] | null) | null;
-    moneyWithCurrencyFormat?: (Scalars['String'] | null) | null;
-    moneyWithCurrencyInEmailsFormat?: (Scalars['String'] | null) | null;
-    multiLocationEnabled?: (Scalars['Boolean'] | null) | null;
-    myshopifyDomain?: (Scalars['String'] | null) | null;
-    name?: (Scalars['String'] | null) | null;
-    passwordEnabled?: (Scalars['Boolean'] | null) | null;
-    phone?: (Scalars['String'] | null) | null;
-    planDisplayName?: (Scalars['String'] | null) | null;
-    planName?: (Scalars['String'] | null) | null;
-    preLaunchEnabled?: (Scalars['Boolean'] | null) | null;
-    primaryLocale?: (Scalars['String'] | null) | null;
-    province?: (Scalars['String'] | null) | null;
-    provinceCode?: (Scalars['String'] | null) | null;
-    requiresExtraPaymentsAgreement?: (Scalars['Boolean'] | null) | null;
-    setupRequired?: (Scalars['Boolean'] | null) | null;
-    shopOwner?: (Scalars['String'] | null) | null;
-    source?: (Scalars['String'] | null) | null;
-    taxShipping?: (Scalars['Boolean'] | null) | null;
-    taxesIncluded?: (Scalars['Boolean'] | null) | null;
-    timezone?: (Scalars['String'] | null) | null;
-    transactionalSmsDisabled?: (Scalars['Boolean'] | null) | null;
-    shopifyUpdatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    weightUnit?: (Scalars['String'] | null) | null;
-    zipCode?: (Scalars['String'] | null) | null;
-    tokens?: (TokenHasManyInput | null)[];
-}
 export interface InternalShopifySyncInput {
     state?: (Scalars['RecordState'] | null) | null;
     stateHistory?: (Scalars['RecordState'] | null) | null;
@@ -980,6 +640,14 @@ export interface InternalTokenInput {
     updatedAt?: Date | Scalars['ISO8601DateString'] | null;
     token?: (Scalars['String'] | null) | null;
     shopId?: InternalBelongsToInput | null;
+}
+export interface InternalTestInput {
+    state?: (Scalars['RecordState'] | null) | null;
+    stateHistory?: (Scalars['RecordState'] | null) | null;
+    id?: (Scalars['GadgetID'] | null) | null;
+    createdAt?: Date | Scalars['ISO8601DateString'] | null;
+    updatedAt?: Date | Scalars['ISO8601DateString'] | null;
+    token?: (Scalars['String'] | null) | null;
 }
 /** All built-in and custom scalars, mapped to their actual values */
 export interface Scalars {
@@ -1237,6 +905,8 @@ export interface Query {
     shopifySyncs: ShopifySyncConnection;
     token: (Token | null);
     tokens: TokenConnection;
+    test: (Test | null);
+    tests: TestConnection;
     internal: (InternalQueries | null);
     currentSession: (Session | null);
     shopifyConnection: Shopify;
@@ -1255,6 +925,8 @@ export type AvailableQuerySelection = {
     shopifySyncs?: AvailableShopifySyncConnectionSelection;
     token?: AvailableTokenSelection;
     tokens?: AvailableTokenConnectionSelection;
+    test?: AvailableTestSelection;
+    tests?: AvailableTestConnectionSelection;
     internal?: AvailableInternalQueriesSelection;
     currentSession?: AvailableSessionSelection;
     shopifyConnection?: AvailableShopifySelection;
@@ -1731,7 +1403,7 @@ export interface Token {
     createdAt: Scalars['DateTime'];
     /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
     updatedAt: Scalars['DateTime'];
-    token: Scalars['String'];
+    token: (Scalars['String'] | null);
     shopId: ShopifyShop;
     shopIdId: Scalars['GadgetID'];
     /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
@@ -1811,6 +1483,60 @@ export type AvailableShopifyShopEdgeSelection = {
     /** A cursor for use in pagination */
     cursor?: boolean | null | undefined;
 };
+export interface Test {
+    __typename: 'Test';
+    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+    id: Scalars['GadgetID'];
+    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+    createdAt: Scalars['DateTime'];
+    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+    updatedAt: Scalars['DateTime'];
+    token: (Scalars['String'] | null);
+    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+    _all: Scalars['JSONObject'];
+}
+export type AvailableTestSelection = {
+    __typename?: boolean | null | undefined;
+    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+    id?: boolean | null | undefined;
+    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+    createdAt?: boolean | null | undefined;
+    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+    updatedAt?: boolean | null | undefined;
+    token?: boolean | null | undefined;
+    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+    _all?: boolean | null | undefined;
+};
+/** A connection to a list of Test items. */
+export interface TestConnection {
+    __typename: 'TestConnection';
+    /** A list of edges. */
+    edges: TestEdge[];
+    /** Information to aid in pagination. */
+    pageInfo: PageInfo;
+}
+export type AvailableTestConnectionSelection = {
+    __typename?: boolean | null | undefined;
+    /** A list of edges. */
+    edges?: AvailableTestEdgeSelection;
+    /** Information to aid in pagination. */
+    pageInfo?: AvailablePageInfoSelection;
+};
+/** An edge in a Test connection. */
+export interface TestEdge {
+    __typename: 'TestEdge';
+    /** The item at the end of the edge */
+    node: Test;
+    /** A cursor for use in pagination */
+    cursor: Scalars['String'];
+}
+export type AvailableTestEdgeSelection = {
+    __typename?: boolean | null | undefined;
+    /** The item at the end of the edge */
+    node?: AvailableTestSelection;
+    /** A cursor for use in pagination */
+    cursor?: boolean | null | undefined;
+};
 export interface InternalQueries {
     __typename: 'InternalQueries';
     session: (InternalSessionRecord | null);
@@ -1825,6 +1551,8 @@ export interface InternalQueries {
     listShopifySync: InternalShopifySyncRecordConnection;
     token: (InternalTokenRecord | null);
     listToken: InternalTokenRecordConnection;
+    test: (InternalTestRecord | null);
+    listTest: InternalTestRecordConnection;
     /** Currently open platform transaction details, or null if no transaction is open */
     currentTransactionDetails: (Scalars['JSONObject'] | null);
 }
@@ -1842,6 +1570,8 @@ export type AvailableInternalQueriesSelection = {
     listShopifySync?: AvailableInternalShopifySyncRecordConnectionSelection;
     token?: boolean | null | undefined;
     listToken?: AvailableInternalTokenRecordConnectionSelection;
+    test?: boolean | null | undefined;
+    listTest?: AvailableInternalTestRecordConnectionSelection;
     /** Currently open platform transaction details, or null if no transaction is open */
     currentTransactionDetails?: boolean | null | undefined;
 };
@@ -2025,6 +1755,36 @@ export type AvailableInternalTokenRecordEdgeSelection = {
     /** A cursor for use in pagination */
     cursor?: boolean | null | undefined;
 };
+/** A connection to a list of InternalTestRecord items. */
+export interface InternalTestRecordConnection {
+    __typename: 'InternalTestRecordConnection';
+    /** A list of edges. */
+    edges: InternalTestRecordEdge[];
+    /** Information to aid in pagination. */
+    pageInfo: PageInfo;
+}
+export type AvailableInternalTestRecordConnectionSelection = {
+    __typename?: boolean | null | undefined;
+    /** A list of edges. */
+    edges?: AvailableInternalTestRecordEdgeSelection;
+    /** Information to aid in pagination. */
+    pageInfo?: AvailablePageInfoSelection;
+};
+/** An edge in a InternalTestRecord connection. */
+export interface InternalTestRecordEdge {
+    __typename: 'InternalTestRecordEdge';
+    /** The item at the end of the edge */
+    node: InternalTestRecord;
+    /** A cursor for use in pagination */
+    cursor: Scalars['String'];
+}
+export type AvailableInternalTestRecordEdgeSelection = {
+    __typename?: boolean | null | undefined;
+    /** The item at the end of the edge */
+    node?: boolean | null | undefined;
+    /** A cursor for use in pagination */
+    cursor?: boolean | null | undefined;
+};
 /** Represents one of the roles an identity in the system can be entitled to */
 export interface GadgetRole {
     __typename: 'GadgetRole';
@@ -2111,6 +1871,10 @@ export interface Mutation {
     updateToken: (UpdateTokenResult | null);
     deleteToken: (DeleteTokenResult | null);
     bulkDeleteTokens: (BulkDeleteTokensResult | null);
+    createTest: (CreateTestResult | null);
+    updateTest: (UpdateTestResult | null);
+    deleteTest: (DeleteTestResult | null);
+    bulkDeleteTests: (BulkDeleteTestsResult | null);
     globalShopifySync: (GlobalShopifySyncResult | null);
     internal: (InternalMutations | null);
 }
@@ -2123,6 +1887,10 @@ export type AvailableMutationSelection = {
     updateToken?: AvailableUpdateTokenResultSelection;
     deleteToken?: AvailableDeleteTokenResultSelection;
     bulkDeleteTokens?: AvailableBulkDeleteTokensResultSelection;
+    createTest?: AvailableCreateTestResultSelection;
+    updateTest?: AvailableUpdateTestResultSelection;
+    deleteTest?: AvailableDeleteTestResultSelection;
+    bulkDeleteTests?: AvailableBulkDeleteTestsResultSelection;
     globalShopifySync?: AvailableGlobalShopifySyncResultSelection;
     internal?: AvailableInternalMutationsSelection;
 };
@@ -2206,6 +1974,50 @@ export type AvailableBulkDeleteTokensResultSelection = {
     success?: boolean | null | undefined;
     errors?: AvailableExecutionErrorSelection;
 };
+export interface CreateTestResult {
+    __typename: 'CreateTestResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    test: (Test | null);
+}
+export type AvailableCreateTestResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    test?: AvailableTestSelection;
+};
+export interface UpdateTestResult {
+    __typename: 'UpdateTestResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    test: (Test | null);
+}
+export type AvailableUpdateTestResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    test?: AvailableTestSelection;
+};
+export interface DeleteTestResult {
+    __typename: 'DeleteTestResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+}
+export type AvailableDeleteTestResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+};
+export interface BulkDeleteTestsResult {
+    __typename: 'BulkDeleteTestsResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+}
+export type AvailableBulkDeleteTestsResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+};
 export interface GlobalShopifySyncResult {
     __typename: 'GlobalShopifySyncResult';
     success: Scalars['Boolean'];
@@ -2270,6 +2082,14 @@ export interface InternalMutations {
     triggerCreateToken: (CreateTokenResult | null);
     triggerUpdateToken: (UpdateTokenResult | null);
     triggerDeleteToken: (DeleteTokenResult | null);
+    createTest: (InternalCreateTestResult | null);
+    updateTest: (InternalUpdateTestResult | null);
+    deleteTest: (InternalDeleteTestResult | null);
+    deleteManyTest: (InternalDeleteManyTestResult | null);
+    bulkCreateTests: (InternalBulkCreateTestsResult | null);
+    triggerCreateTest: (CreateTestResult | null);
+    triggerUpdateTest: (UpdateTestResult | null);
+    triggerDeleteTest: (DeleteTestResult | null);
     triggerGlobalShopifySync: (GlobalShopifySyncResult | null);
 }
 export type AvailableInternalMutationsSelection = {
@@ -2324,6 +2144,14 @@ export type AvailableInternalMutationsSelection = {
     triggerCreateToken?: AvailableCreateTokenResultSelection;
     triggerUpdateToken?: AvailableUpdateTokenResultSelection;
     triggerDeleteToken?: AvailableDeleteTokenResultSelection;
+    createTest?: AvailableInternalCreateTestResultSelection;
+    updateTest?: AvailableInternalUpdateTestResultSelection;
+    deleteTest?: AvailableInternalDeleteTestResultSelection;
+    deleteManyTest?: AvailableInternalDeleteManyTestResultSelection;
+    bulkCreateTests?: AvailableInternalBulkCreateTestsResultSelection;
+    triggerCreateTest?: AvailableCreateTestResultSelection;
+    triggerUpdateTest?: AvailableUpdateTestResultSelection;
+    triggerDeleteTest?: AvailableDeleteTestResultSelection;
     triggerGlobalShopifySync?: AvailableGlobalShopifySyncResultSelection;
 };
 export interface LockOperationResult {
@@ -2793,6 +2621,64 @@ export type AvailableInternalBulkCreateTokensResultSelection = {
     success?: boolean | null | undefined;
     errors?: AvailableExecutionErrorSelection;
     tokens?: boolean | null | undefined;
+};
+export interface InternalCreateTestResult {
+    __typename: 'InternalCreateTestResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    test: (InternalTestRecord | null);
+}
+export type AvailableInternalCreateTestResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    test?: boolean | null | undefined;
+};
+export interface InternalUpdateTestResult {
+    __typename: 'InternalUpdateTestResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    test: (InternalTestRecord | null);
+}
+export type AvailableInternalUpdateTestResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    test?: boolean | null | undefined;
+};
+export interface InternalDeleteTestResult {
+    __typename: 'InternalDeleteTestResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    test: (InternalTestRecord | null);
+}
+export type AvailableInternalDeleteTestResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    test?: boolean | null | undefined;
+};
+export interface InternalDeleteManyTestResult {
+    __typename: 'InternalDeleteManyTestResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+}
+export type AvailableInternalDeleteManyTestResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+};
+export interface InternalBulkCreateTestsResult {
+    __typename: 'InternalBulkCreateTestsResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    tests: (InternalTestRecord | null)[];
+}
+export type AvailableInternalBulkCreateTestsResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    tests?: boolean | null | undefined;
 };
 export type ExplicitNestingRequired = never;
 export type DeepFilterNever<T> = T extends Record<string, unknown> ? FilterNever<{

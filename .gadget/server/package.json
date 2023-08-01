@@ -1,6 +1,6 @@
 {
   "name": "gadget-server",
-  "version": "1.45.0",
+  "version": "1.130.0",
   "files": [
     "dist/**/*"
   ],
@@ -39,6 +39,6 @@
   "gadget": {
     "applicationName": "Feliwxp",
     "environmentName": "Development",
-    "environmentVersion": "45"
+    "environmentVersion": "130"
   }
 }

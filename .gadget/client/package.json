@@ -1,6 +1,6 @@
 {
   "name": "@gadget-client/feliwxp",
-  "version": "1.45.0",
+  "version": "1.130.0",
   "files": [
     "dist-*/",
     "types",
@@ -30,6 +30,6 @@
   "gadget": {
     "applicationName": "Feliwxp",
     "environmentName": "Development",
-    "environmentVersion": "45"
+    "environmentVersion": "130"
   }
 }

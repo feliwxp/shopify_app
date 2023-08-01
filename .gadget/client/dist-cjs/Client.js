@@ -28,6 +28,7 @@ var import_ShopifyProduct = require("./models/ShopifyProduct.js");
 var import_ShopifyShop = require("./models/ShopifyShop.js");
 var import_ShopifySync = require("./models/ShopifySync.js");
 var import_Token = require("./models/Token.js");
+var import_Test = require("./models/Test.js");
 var import_CurrentSession = require("./models/CurrentSession.js");
 var import_api_client_core2 = require("@gadgetinc/api-client-core");
 const productionEnv = "production";
@@ -96,6 +97,7 @@ class Client {
     this.shopifyShop = new import_ShopifyShop.ShopifyShopManager(this.connection);
     this.shopifySync = new import_ShopifySync.ShopifySyncManager(this.connection);
     this.token = new import_Token.TokenManager(this.connection);
+    this.test = new import_Test.TestManager(this.connection);
     this.currentSession = new import_CurrentSession.CurrentSessionManager(this.connection);
     this.internal = {
       session: new import_api_client_core.InternalModelManager("session", this.connection, {
@@ -127,6 +129,11 @@ class Client {
         pluralApiIdentifier: "tokens",
         // @ts-ignore
         hasAmbiguousIdentifier: true
+      }),
+      test: new import_api_client_core.InternalModelManager("test", this.connection, {
+        pluralApiIdentifier: "tests",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
       })
     };
   }

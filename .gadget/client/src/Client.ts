@@ -11,6 +11,7 @@ import { ShopifyProductManager } from "./models/ShopifyProduct.js";
 import { ShopifyShopManager } from "./models/ShopifyShop.js";
 import { ShopifySyncManager } from "./models/ShopifySync.js";
 import { TokenManager } from "./models/Token.js";
+import { TestManager } from "./models/Test.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
 import { globalActionRunner } from "@gadgetinc/api-client-core";
 
@@ -21,6 +22,7 @@ type InternalModelManagers = {
   shopifyShop: InternalModelManager;
   shopifySync: InternalModelManager;
   token: InternalModelManager;
+  test: InternalModelManager;
 };
 
 type ClientOptions = Omit<ApiClientOptions, "environment"> & { environment?: string };
@@ -52,6 +54,7 @@ export class Client implements AnyClient {
   shopifyShop: ShopifyShopManager;
   shopifySync: ShopifySyncManager;
   token: TokenManager;
+  test: TestManager;
   currentSession: CurrentSessionManager;
 
   /**
@@ -91,6 +94,7 @@ export class Client implements AnyClient {
     this.shopifyShop = new ShopifyShopManager(this.connection);
     this.shopifySync = new ShopifySyncManager(this.connection);
     this.token = new TokenManager(this.connection);
+    this.test = new TestManager(this.connection);
     this.currentSession = new CurrentSessionManager(this.connection);
 
     this.internal = {
@@ -123,6 +127,11 @@ export class Client implements AnyClient {
       	pluralApiIdentifier: "tokens",
         // @ts-ignore
 	      hasAmbiguousIdentifier: true,
+      }),
+      test: new InternalModelManager("test", this.connection, {
+      	pluralApiIdentifier: "tests",
+        // @ts-ignore
+	      hasAmbiguousIdentifier: false,
       }),
     };
   }
